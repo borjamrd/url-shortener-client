@@ -30,7 +30,7 @@ export const listUrls = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`http://localhost:5000/api/urls/`, config);
+    const { data } = await axios.get(`http://localhost:5001/api/urls/`, config);
 
     dispatch({
       type: URLS_LIST_SUCCESS,
@@ -48,7 +48,7 @@ export const listUrls = () => async (dispatch, getState) => {
   }
 };
 
-export const createUrlAction = (title, content, category) => async (
+export const createUrlAction = (origUrl) => async (
   dispatch,
   getState
 ) => {
@@ -69,8 +69,8 @@ export const createUrlAction = (title, content, category) => async (
     };
 
     const { data } = await axios.post(
-      `http://localhost:5000/api/urls/create`,
-      { title, content, category },
+      `http://localhost:5001/api/urls/create`,
+      { origUrl },
       config
     );
 
@@ -90,7 +90,7 @@ export const createUrlAction = (title, content, category) => async (
   }
 };
 
-export const deleteUrlAction = (id) => async (dispatch, getState) => {
+export const deleteUrlAction = (_id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: URLS_DELETE_REQUEST,
@@ -106,7 +106,7 @@ export const deleteUrlAction = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.delete(`http://localhost:5000/api/urls/${id}`, config);
+    const { data } = await axios.delete(`http://localhost:5001/api/urls/${_id}`, config);
 
     dispatch({
       type: URLS_DELETE_SUCCESS,
@@ -124,7 +124,7 @@ export const deleteUrlAction = (id) => async (dispatch, getState) => {
   }
 };
 
-export const updateUrlAction = (id, title, content, category) => async (
+export const updateUrlAction = (_id) => async (
   dispatch,
   getState
 ) => {
@@ -145,8 +145,7 @@ export const updateUrlAction = (id, title, content, category) => async (
     };
 
     const { data } = await axios.put(
-      `http://localhost:5000/api/urls/${id}`,
-      { title, content, category },
+      `http://localhost:5001/api/urls/${_id}`,
       config
     );
 

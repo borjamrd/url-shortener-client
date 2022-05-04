@@ -21,7 +21,7 @@ function LoginScreen() {
 
   useEffect(() => {
     if (userInfo) {
-      navigate("/mynotes");
+      navigate("/mis-urls");
     }
   }, [navigate, userInfo]);
 
@@ -62,7 +62,7 @@ function LoginScreen() {
         </Form>
         <Row className="py-3">
           <Col>
-            New Customer ? <Link to="/register">Register Here</Link>
+            ¿No tienes usuario y contraseña? <Link to="/register">Regístrate</Link>
           </Col>
         </Row>
       </div>

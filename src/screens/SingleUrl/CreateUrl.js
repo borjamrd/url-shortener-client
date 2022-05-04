@@ -5,17 +5,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { createUrlAction } from "../../actions/urlsActions";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
-import ReactMarkdown from "react-markdown";
+import { useNavigate } from "react-router-dom";
 
 function CreateUrl({ history }) {
-  const [url, setUrl] = useState("");
+  const [origUrl, setUrl] = useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const noteCreate = useSelector((state) => state.noteCreate);
-  const { loading, error, note } = noteCreate;
+  const urlCreate = useSelector((state) => state.urlCreate);
+  const { loading, error, url } = urlCreate;
 
-  console.log(note);
+  console.log(origUrl, 'origin url');
+  console.log(url, 'url');
 
   const resetHandler = () => {
     setUrl("");
@@ -24,11 +26,11 @@ function CreateUrl({ history }) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(createUrlAction(url));
+    dispatch(createUrlAction(origUrl));
     if (!origUrl ) return;
 
     resetHandler();
-    history.push("/mis-urls");
+    navigate("/mis-urls");
   };
 
   useEffect(() => {}, []);
@@ -44,7 +46,7 @@ function CreateUrl({ history }) {
               <Form.Label>URL</Form.Label>
               <Form.Control
                 type="url"
-                value={url}
+                value={origUrl}
                 placeholder="Entroduce una URL"
                 onChange={(e) => setUrl(e.target.value)}
               />

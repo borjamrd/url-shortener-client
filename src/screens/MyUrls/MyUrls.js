@@ -9,6 +9,8 @@ import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
 
 
+
+
 function MyUrls({ history, search }) {
   const dispatch = useDispatch();
 
@@ -46,9 +48,9 @@ function MyUrls({ history, search }) {
     successUpdate,
   ]);
 
-  const deleteHandler = (id) => {
+  const deleteHandler = (_id) => {
     if (window.confirm("Estás seguro?")) {
-      dispatch(deleteUrlAction(id));
+      dispatch(deleteUrlAction(_id));
     }
   };
 
@@ -70,7 +72,7 @@ function MyUrls({ history, search }) {
       {urlList.URLS &&
         urlList.URLS.map((url) => (
             <Accordion>
-              <Card style={{ margin: 10 }} key={url.origUrl}>
+              <Card style={{ margin: 10 }} key={url._id}>
                 <Card.Header style={{ display: "flex" }}>
                   <span
                     // onClick={() => ModelShow(url)}
@@ -88,35 +90,42 @@ function MyUrls({ history, search }) {
                       variant="link"
                       eventKey="0"
                     >
-                      {url.origUrl}
+                  
+                     <strong>URL acortada: </strong> {url.shortUrl} {''}
+                     <button onClick={() =>  navigator.clipboard.writeText(`${url.origUrl}`)}>
+                        Copy to clipboard
+                      </button>
                     </Accordion.Toggle>
                   </span>
 
                   <div>
-                    <Button href={`/url/${url.origUrl}`}>Edit</Button>
+                    <Button href={`/urls/${url._id}`}>Modificar</Button>
                     <Button
                       variant="danger"
                       className="mx-2"
-                      onClick={() => deleteHandler(url.origUrl)}
+                      onClick={() => deleteHandler(url._id)}
                     >
-                      Delete
+                      Eliminar
                     </Button>
                   </div>
                 </Card.Header>
                 <Accordion.Collapse eventKey="0">
                   <Card.Body>
-                    <h4>
-                      <Badge variant="success">
-                        Category - {url.category}
-                      </Badge>
-                    </h4>
+                    <h6>
+                      <strong>URL original</strong> {url.origUrl}
+                    </h6>
+                    <h6>
+                      <strong>Última modificación</strong> {url.updatedAt}
+                    </h6>
                     <blockquote className="blockquote mb-0">
                       <ReactMarkdown>{url.content}</ReactMarkdown>
                       <footer className="blockquote-footer">
-                        Created on{" "}
+                        Fecha de creación{" "}
                         <cite title="Source Title">
                           {url.createdAt.substring(0, 10)}
+                          
                         </cite>
+                        
                       </footer>
                     </blockquote>
                   </Card.Body>

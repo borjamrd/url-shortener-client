@@ -7,58 +7,57 @@ import { deleteUrlAction, updateUrlAction } from "../../actions/urlsActions";
 import ErrorMessage from "../../components/ErrorMessage";
 import Loading from "../../components/Loading";
 import ReactMarkdown from "react-markdown";
+import { useNavigate, useParams } from "react-router-dom";
 
-function SingleUrl({ match, history }) {
-  const [title, setTitle] = useState();
-  const [content, setContent] = useState();
-  const [category, setCategory] = useState();
+function SingleUrl() {
+
+  const params = useParams()
+  const navigate = useNavigate()
+  const [origUrl, setUrlToModif] = useState();
+  // const [source, setSource] = useState();
+  // const [setMedium, setMedium] = useState();
   const [date, setDate] = useState("");
 
   const dispatch = useDispatch();
 
-  const noteUpdate = useSelector((state) => state.noteUpdate);
-  const { loading, error } = noteUpdate;
+  const urlUpdate = useSelector((state) => state.urlUpdate);
+  const { loading, error } = urlUpdate;
 
-  const noteDelete = useSelector((state) => state.noteDelete);
-  const { loading: loadingDelete, error: errorDelete } = noteDelete;
+  const urlDelete = useSelector((state) => state.urlDelete);
+  const { loading: loadingDelete, error: errorDelete } = urlDelete;
 
-  const deleteHandler = (id) => {
+  const deleteHandler = (_id) => {
     if (window.confirm("Are you sure?")) {
-      dispatch(deleteUrlAction(id));
+      dispatch(deleteUrlAction(_id));
     }
-    history.push("/mis-urls");
+    navigate("/mis-urls");
   };
 
   useEffect(() => {
     const fetching = async () => {
-      const { data } = await axios.get(`/api/notes/${match.params.id}`);
-
-      setTitle(data.title);
-      setContent(data.content);
-      setCategory(data.category);
+      const { data } = await axios.get(`http://localhost:5001/api/urls/${params.id}`);
+      setUrlToModif(data.origUrl);
       setDate(data.updatedAt);
     };
 
     fetching();
-  }, [match.params.id, date]);
+  }, [params.id, date]);
 
   const resetHandler = () => {
-    setTitle("");
-    setCategory("");
-    setContent("");
+    setUrlToModif("");;
   };
 
   const updateHandler = (e) => {
     e.preventDefault();
-    dispatch(updateUrlAction(match.params.id, title, content, category));
-    if (!title || !content || !category) return;
-
+    dispatch(updateUrlAction(params.id/* , origUrl, content, category */));
+    // if (!origUrl) return;
+    alert('modificado con éxito')
     resetHandler();
-    history.push("/mis-urls");
+    navigate("/mis-urls");
   };
 
   return (
-    <MainScreen title="Editar Url">
+    <MainScreen origUrl="Editar Url">
       <Card>
         <Card.Header>Edita tu URL</Card.Header>
         <Card.Body>
@@ -68,44 +67,16 @@ function SingleUrl({ match, history }) {
             {errorDelete && (
               <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
             )}
-            <Form.Group controlId="title">
-              <Form.Label>Titulo</Form.Label>
+            <Form.Group controlId="origUrl">
+              <Form.Label>Modifica tu url</Form.Label>
               <Form.Control
-                type="title"
-                placeholder="Enter the title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                type="origUrl"
+                placeholder="Enter the origUrl"
+                value={origUrl}
+                onChange={(e) => setUrlToModif(e.target.value)}
               />
             </Form.Group>
 
-            <Form.Group controlId="content">
-              <Form.Label>Contenido</Form.Label>
-              <Form.Control
-                as="textarea"
-                placeholder="Enter the content"
-                rows={4}
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-              />
-            </Form.Group>
-            {content && (
-              <Card>
-                <Card.Header>Previsualizacion de URL</Card.Header>
-                <Card.Body>
-                  <ReactMarkdown>{content}</ReactMarkdown>
-                </Card.Body>
-              </Card>
-            )}
-
-            <Form.Group controlId="content">
-              <Form.Label>Category</Form.Label>
-              <Form.Control
-                type="content"
-                placeholder="Enter the Category"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              />
-            </Form.Group>
             {loading && <Loading size={50} />}
             <Button variant="primary" type="submit">
               Actualizar url
@@ -113,7 +84,7 @@ function SingleUrl({ match, history }) {
             <Button
               className="mx-2"
               variant="danger"
-              onClick={() => deleteHandler(match.params.id)}
+              onClick={() => deleteHandler(params.id)}
             >
               Borrar url
             </Button>

@@ -10,8 +10,10 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import {} from "react-router-dom";
 import { logout } from "../actions/userActions";
+import { useNavigate } from "react-router-dom";
 
 function Header({ setSearch }) {
+  const navigate = useNavigate()
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -19,6 +21,8 @@ function Header({ setSearch }) {
 
   const logoutHandler = () => {
     dispatch(logout());
+    navigate('/')
+    
   };
 
   useEffect(() => {}, [userInfo]);
