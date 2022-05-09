@@ -106,7 +106,7 @@ export const deleteUrlAction = (_id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.delete(`http://localhost:5001/api/urls/${_id}`, config);
+    const { data } = await axios.delete(`http://localhost:5001api/urls/orig/${_id}`, config);
 
     dispatch({
       type: URLS_DELETE_SUCCESS,
@@ -145,7 +145,7 @@ export const updateUrlAction = (_id) => async (
     };
 
     const { data } = await axios.put(
-      `http://localhost:5001/api/urls/${_id}`,
+      `http://localhost:5001/api/urls/orig/${_id}`,
       config
     );
 

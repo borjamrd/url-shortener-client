@@ -54,9 +54,9 @@ function MyUrls({ history, search }) {
     }
   };
 
-
+  
   return (
-    <MainScreen title={`Hola de nuevo ${userInfo && userInfo.name}..`}>
+      <MainScreen title={`Hola de nuevo ${userInfo && userInfo.name}.`}>
       {console.log(urlList)}
       <Link to="/crear-url">
         <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
@@ -92,7 +92,7 @@ function MyUrls({ history, search }) {
                     >
                   
                      <strong>URL acortada: </strong> {url.shortUrl} {''}
-                     <button onClick={() =>  navigator.clipboard.writeText(`${url.origUrl}`)}>
+                     <button onClick={() =>  navigator.clipboard.writeText(`${url.shortUrl}`)}>
                         Copy to clipboard
                       </button>
                     </Accordion.Toggle>
@@ -116,6 +116,9 @@ function MyUrls({ history, search }) {
                     </h6>
                     <h6>
                       <strong>Última modificación</strong> {url.updatedAt}
+                    </h6>
+                    <h6>
+                      <strong>Clicks realizados</strong> {url.clicks}
                     </h6>
                     <blockquote className="blockquote mb-0">
                       <ReactMarkdown>{url.content}</ReactMarkdown>
