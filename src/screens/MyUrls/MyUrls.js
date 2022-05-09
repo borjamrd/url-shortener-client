@@ -4,7 +4,7 @@ import MainScreen from "../../components/MainScreen";
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUrlAction, listUrls } from "../../actions/urlsActions";
+import { deleteUrlAction, listUrls, updateUrlAction} from "../../actions/urlsActions";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
 
@@ -37,7 +37,7 @@ function MyUrls({ history, search }) {
   useEffect(() => {
     dispatch(listUrls());
     if (!userInfo) {
-      history.push("/");
+      history.push("/orig/");
     }
   }, [
     dispatch,
@@ -51,7 +51,13 @@ function MyUrls({ history, search }) {
   const deleteHandler = (_id) => {
     if (window.confirm("Estás seguro?")) {
       dispatch(deleteUrlAction(_id));
+      alert('URL eliminada con éxito')
     }
+  };
+
+  const updateHandler = (_id) => {
+      dispatch(updateUrlAction(_id));
+      
   };
 
   
@@ -70,9 +76,9 @@ function MyUrls({ history, search }) {
       {loading && <Loading />}
       {loadingDelete && <Loading />}
       {urlList.URLS &&
-        urlList.URLS.map((url) => (
+        urlList.URLS.map((url, key) => (
             <Accordion>
-              <Card style={{ margin: 10 }} key={url._id}>
+              <Card style={{ margin: 10 }} >
                 <Card.Header style={{ display: "flex" }}>
                   <span
                     // onClick={() => ModelShow(url)}
@@ -92,14 +98,14 @@ function MyUrls({ history, search }) {
                     >
                   
                      <strong>URL acortada: </strong> {url.shortUrl} {''}
-                     <button onClick={() =>  navigator.clipboard.writeText(`${url.shortUrl}`)}>
+                     <button key={url._id} onClick={() =>  navigator.clipboard.writeText(`${url.shortUrl}`)}>
                         Copy to clipboard
                       </button>
                     </Accordion.Toggle>
                   </span>
 
                   <div>
-                    <Button href={`/urls/${url._id}`}>Modificar</Button>
+                    <Button href={`/urls/orig/${url._id}`} onClick={()=>updateHandler(url._id)}>Modificar</Button>
                     <Button
                       variant="danger"
                       className="mx-2"

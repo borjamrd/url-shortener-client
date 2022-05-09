@@ -1,6 +1,13 @@
 .title {
   font-size: 95px;
 }
+
+.url-landing{
+  width: 30%;
+}
+.url-section{
+  padding: 0% 20%;
+}
 .subtitle {
   font-size: 25px;
   padding-top: 10px;
@@ -53,6 +60,7 @@
     height: 50px;
   }
 }
+
 
 .wrapper {
   height: 30vh;

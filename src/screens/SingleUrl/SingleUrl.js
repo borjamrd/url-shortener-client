@@ -27,8 +27,9 @@ function SingleUrl() {
   const { loading: loadingDelete, error: errorDelete } = urlDelete;
 
   const deleteHandler = (_id) => {
-    if (window.confirm("Are you sure?")) {
+    if (window.confirm("Estás seguro?")) {
       dispatch(deleteUrlAction(_id));
+      alert('Nota eliminada con éxito')
     }
     navigate("/mis-urls");
   };

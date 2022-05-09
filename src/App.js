@@ -23,7 +23,7 @@ function App() {
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/register" element={<RegisterScreen />} />
         <Route path="/mis-urls" element={<MyUrls />}/>
-        <Route path="/urls/:id" element={<SingleUrl />} />
+        <Route path="/urls/orig/:id" element={<SingleUrl />} />
         <Route path="/crear-url" element={<CreateUrl />} />;
         <Route path="/profile" element={<ProfileScreen />} />
         </Routes>
