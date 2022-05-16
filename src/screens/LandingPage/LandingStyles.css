@@ -12,6 +12,9 @@
   font-size: 25px;
   padding-top: 10px;
 }
+.mb-3{
+  justify-content: center;
+}
 .intro-text {
   width: 100%;
   text-align: center;
