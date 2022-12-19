@@ -30,7 +30,10 @@ export const listUrls = () => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.get(`http://localhost:5001/api/urls/`, config);
+        const { data } = await axios.get(
+            `https://url-shortener-service-etj7.onrender.com/api/urls/`,
+            config
+        );
 
         dispatch({
             type: URLS_LIST_SUCCESS,
@@ -66,7 +69,7 @@ export const createUrlAction = (origUrl) => async (dispatch, getState) => {
         };
 
         const { data } = await axios.post(
-            `http://localhost:5001/api/urls/create`,
+            `https://url-shortener-service-etj7.onrender.com/api/urls/create`,
             { origUrl },
             config
         );
@@ -103,7 +106,10 @@ export const deleteUrlAction = (_id) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.delete(`http://localhost:5001/api/urls/orig/${_id}`, config);
+        const { data } = await axios.delete(
+            `https://url-shortener-service-etj7.onrender.com/api/urls/orig/${_id}`,
+            config
+        );
 
         dispatch({
             type: URLS_DELETE_SUCCESS,
@@ -138,7 +144,10 @@ export const updateUrlAction = (_id) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.put(`http://localhost:5001/api/urls/orig/${_id}`, config);
+        const { data } = await axios.put(
+            `https://url-shortener-service-etj7.onrender.com/api/urls/orig/${_id}`,
+            config
+        );
 
         dispatch({
             type: URLS_UPDATE_SUCCESS,
